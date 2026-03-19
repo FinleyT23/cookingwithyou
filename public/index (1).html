@@ -1,0 +1,1075 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CookingWithYou</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Crimson+Text:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ── Tokens ─────────────────────────────────────────────────── */
+    :root {
+      --cream:       #F5F0E8;
+      --cream-dark:  #EDE5D0;
+      --parchment:   #E8DCBF;
+      --brown-light: #C4A882;
+      --brown:       #8B6F47;
+      --brown-dark:  #5C4A2A;
+      --ink:         #2C1F0E;
+      --ink-light:   #4A3728;
+      --red:         #8B2E2E;
+      --red-light:   #C4564A;
+      --green:       #3D5A3E;
+      --green-light: #6B8F6C;
+      --shadow:      rgba(44, 31, 14, 0.12);
+      --shadow-deep: rgba(44, 31, 14, 0.25);
+    }
+
+    /* ── Reset ──────────────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    /* ── Base ───────────────────────────────────────────────────── */
+    html { scroll-behavior: smooth; }
+
+    body {
+      background-color: var(--cream);
+      background-image:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      font-family: 'Crimson Text', Georgia, serif;
+      color: var(--ink);
+      min-height: 100vh;
+    }
+
+    /* ── Decorative top border ──────────────────────────────────── */
+    .top-border {
+      height: 6px;
+      background: repeating-linear-gradient(
+        90deg,
+        var(--brown-dark) 0px,
+        var(--brown-dark) 12px,
+        var(--red) 12px,
+        var(--red) 16px,
+        var(--brown-dark) 16px,
+        var(--brown-dark) 28px,
+        var(--parchment) 28px,
+        var(--parchment) 32px
+      );
+    }
+
+    /* ── Header ─────────────────────────────────────────────────── */
+    header {
+      text-align: center;
+      padding: 3rem 2rem 2rem;
+      position: relative;
+    }
+
+    .header-ornament {
+      font-family: 'Playfair Display', serif;
+      font-size: 1rem;
+      color: var(--brown);
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      margin-bottom: 0.75rem;
+      display: block;
+    }
+
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.8rem, 6vw, 4.5rem);
+      font-weight: 700;
+      color: var(--ink);
+      line-height: 1.05;
+      letter-spacing: -0.02em;
+    }
+
+    h1 em {
+      font-style: italic;
+      color: var(--brown-dark);
+    }
+
+    .header-rule {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin: 1.25rem auto 0;
+      max-width: 400px;
+    }
+
+    .header-rule::before,
+    .header-rule::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--brown-light);
+    }
+
+    .header-rule span {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem;
+      color: var(--brown);
+    }
+
+    .tagline {
+      font-family: 'Crimson Text', serif;
+      font-style: italic;
+      font-size: 1.2rem;
+      color: var(--brown);
+      margin-top: 0.75rem;
+    }
+
+    /* ── Layout ─────────────────────────────────────────────────── */
+    main {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 0 1.5rem 4rem;
+    }
+
+    /* ── Section headings ───────────────────────────────────────── */
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--brown-dark);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      margin-bottom: 0.75rem;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .section-title::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--parchment);
+    }
+
+    /* ── Form card ──────────────────────────────────────────────── */
+    .form-card {
+      background: #FAF6EE;
+      border: 1px solid var(--parchment);
+      border-radius: 2px;
+      padding: 2rem;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 2px 12px var(--shadow), inset 0 0 0 1px rgba(255,255,255,0.6);
+      animation: fadeUp 0.5s ease both;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(12px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── Creator toggle ─────────────────────────────────────────── */
+    .creator-toggle {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+      padding-bottom: 0.75rem;
+      border-bottom: 1px solid var(--parchment);
+      margin-bottom: 1.25rem;
+      user-select: none;
+    }
+
+    .creator-toggle-left {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .creator-badge {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.65rem;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      background: var(--brown-dark);
+      color: var(--cream);
+      padding: 3px 9px;
+      border-radius: 2px;
+    }
+
+    .creator-toggle-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1rem;
+      color: var(--ink-light);
+    }
+
+    .creator-toggle-arrow {
+      font-size: 0.75rem;
+      color: var(--brown);
+      transition: transform 0.25s ease;
+    }
+
+    .creator-toggle-arrow.open { transform: rotate(180deg); }
+
+    /* ── Upload zones ───────────────────────────────────────────── */
+    .upload-zone {
+      border: 1.5px dashed var(--brown-light);
+      border-radius: 2px;
+      padding: 1.5rem;
+      text-align: center;
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s;
+      background: rgba(255,255,255,0.4);
+    }
+
+    .upload-zone:hover { border-color: var(--brown); background: rgba(255,255,255,0.65); }
+    .upload-zone.drag-over { border-color: var(--green); background: rgba(61,90,62,0.05); }
+    .upload-zone input { display: none; }
+
+    .upload-icon {
+      font-size: 1.6rem;
+      margin-bottom: 0.4rem;
+      display: block;
+      color: var(--brown-light);
+    }
+
+    .upload-zone p {
+      font-family: 'Crimson Text', serif;
+      font-size: 1.05rem;
+      color: var(--brown);
+    }
+
+    .upload-zone span {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.72rem;
+      color: var(--brown-light);
+      margin-top: 3px;
+      display: block;
+    }
+
+    /* ── File chips ─────────────────────────────────────────────── */
+    .file-list { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+
+    .file-chip {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 500;
+      padding: 4px 10px;
+      border-radius: 2px;
+    }
+
+    .chip-base {
+      background: var(--brown-dark);
+      color: var(--cream);
+    }
+
+    .chip-user {
+      background: var(--green);
+      color: var(--cream);
+    }
+
+    .file-chip button {
+      background: none; border: none; cursor: pointer;
+      font-size: 0.85rem; line-height: 1; padding: 0;
+      color: inherit; opacity: 0.65;
+    }
+    .file-chip button:hover { opacity: 1; }
+
+    /* ── Textareas ──────────────────────────────────────────────── */
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.25rem;
+      margin-bottom: 1.5rem;
+    }
+
+    @media (max-width: 560px) { .two-col { grid-template-columns: 1fr; } }
+
+    .field-group { display: flex; flex-direction: column; }
+
+    .field-label {
+      font-family: 'Playfair Display', serif;
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--ink-light);
+      margin-bottom: 0.5rem;
+    }
+
+    .field-label .required {
+      color: var(--red);
+      margin-left: 2px;
+      font-style: normal;
+    }
+
+    textarea {
+      font-family: 'Crimson Text', serif;
+      font-size: 1.05rem;
+      color: var(--ink);
+      background: rgba(255,255,255,0.55);
+      border: 1px solid var(--parchment);
+      border-radius: 2px;
+      padding: 0.85rem 1rem;
+      resize: vertical;
+      min-height: 120px;
+      line-height: 1.6;
+      transition: border-color 0.2s, background 0.2s;
+    }
+
+    textarea:focus {
+      outline: none;
+      border-color: var(--brown);
+      background: rgba(255,255,255,0.8);
+    }
+
+    textarea::placeholder {
+      color: var(--brown-light);
+      font-style: italic;
+    }
+
+    textarea.invalid { border-color: var(--red-light); }
+
+    .field-error {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.72rem;
+      color: var(--red);
+      margin-top: 4px;
+      display: none;
+    }
+    .field-error.show { display: block; }
+
+    /* ── Filters row ────────────────────────────────────────────── */
+    .filters-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.25rem;
+      margin-bottom: 1.5rem;
+    }
+
+    @media (max-width: 560px) { .filters-grid { grid-template-columns: 1fr; } }
+
+    .checkboxes-wrap {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 2px;
+    }
+
+    .checkbox-label {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-family: 'Crimson Text', serif;
+      font-size: 1rem;
+      color: var(--ink-light);
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .checkbox-label input[type="checkbox"] {
+      accent-color: var(--brown-dark);
+      width: 14px;
+      height: 14px;
+      cursor: pointer;
+    }
+
+    .selects-wrap { display: flex; flex-direction: column; gap: 10px; }
+
+    select {
+      font-family: 'Crimson Text', serif;
+      font-size: 1rem;
+      color: var(--ink);
+      background: rgba(255,255,255,0.55);
+      border: 1px solid var(--parchment);
+      border-radius: 2px;
+      padding: 0.55rem 0.85rem;
+      cursor: pointer;
+      transition: border-color 0.2s;
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%238B6F47' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 12px center;
+      padding-right: 2rem;
+    }
+
+    select:focus { outline: none; border-color: var(--brown); }
+
+    /* ── User upload (optional) ─────────────────────────────────── */
+    .user-upload-mini {
+      border: 1px dashed var(--brown-light);
+      border-radius: 2px;
+      padding: 0.85rem 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      cursor: pointer;
+      background: rgba(255,255,255,0.35);
+      transition: border-color 0.2s, background 0.2s;
+      margin-bottom: 0.5rem;
+    }
+
+    .user-upload-mini:hover { border-color: var(--brown); background: rgba(255,255,255,0.55); }
+    .user-upload-mini input { display: none; }
+
+    .user-upload-mini p {
+      font-family: 'Crimson Text', serif;
+      font-size: 1rem;
+      color: var(--brown);
+    }
+
+    .user-upload-mini span {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.68rem;
+      color: var(--brown-light);
+    }
+
+    /* ── Submit button ──────────────────────────────────────────── */
+    .submit-wrap { margin-top: 0.5rem; }
+
+    .submit-btn {
+      width: 100%;
+      padding: 1rem 2rem;
+      background: var(--brown-dark);
+      color: var(--cream);
+      border: none;
+      border-radius: 2px;
+      font-family: 'Playfair Display', serif;
+      font-size: 1.15rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.1s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .submit-btn::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(
+        90deg,
+        transparent 0, transparent 20px,
+        rgba(255,255,255,0.03) 20px, rgba(255,255,255,0.03) 22px
+      );
+    }
+
+    .submit-btn:hover { background: var(--ink); }
+    .submit-btn:active { transform: scale(0.995); }
+    .submit-btn:disabled {
+      background: var(--brown-light);
+      cursor: not-allowed;
+      color: rgba(255,255,255,0.6);
+    }
+
+    /* ── Warning / error ────────────────────────────────────────── */
+    .alert {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.8rem;
+      padding: 8px 12px;
+      border-radius: 2px;
+      margin-bottom: 1rem;
+      display: none;
+    }
+
+    .alert.show { display: block; }
+    .alert-warning { background: #FDF3DC; color: #7A5800; border-left: 3px solid #C4A020; }
+    .alert-error   { background: #FDECEA; color: var(--red); border-left: 3px solid var(--red); }
+
+    /* ── Loading ────────────────────────────────────────────────── */
+    .loading-wrap {
+      text-align: center;
+      padding: 3rem 0;
+      animation: fadeUp 0.4s ease both;
+    }
+
+    .loading-wrap p {
+      font-family: 'Crimson Text', serif;
+      font-style: italic;
+      font-size: 1.15rem;
+      color: var(--brown);
+      margin-top: 1rem;
+    }
+
+    .loading-dots { display: inline-flex; gap: 6px; align-items: center; }
+    .loading-dots span {
+      width: 8px; height: 8px;
+      background: var(--brown);
+      border-radius: 50%;
+      animation: bounce 1.3s ease infinite;
+    }
+    .loading-dots span:nth-child(2) { animation-delay: 0.2s; }
+    .loading-dots span:nth-child(3) { animation-delay: 0.4s; }
+
+    @keyframes bounce {
+      0%, 80%, 100% { transform: scale(0.55); opacity: 0.35; }
+      40% { transform: scale(1); opacity: 1; }
+    }
+
+    /* ── Results section ────────────────────────────────────────── */
+    .results-header {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: var(--ink);
+      margin-bottom: 1.5rem;
+      text-align: center;
+      animation: fadeUp 0.4s ease both;
+    }
+
+    .results-header em {
+      font-style: italic;
+      color: var(--brown-dark);
+    }
+
+    /* ── Recipe cards ───────────────────────────────────────────── */
+    .recipe-cards { display: flex; flex-direction: column; gap: 1.5rem; }
+
+    .recipe-card {
+      background: #FAF6EE;
+      border: 1px solid var(--parchment);
+      border-radius: 2px;
+      padding: 0;
+      box-shadow: 0 3px 16px var(--shadow);
+      overflow: hidden;
+      animation: fadeUp 0.5s ease both;
+    }
+
+    .recipe-card:nth-child(2) { animation-delay: 0.1s; }
+    .recipe-card:nth-child(3) { animation-delay: 0.2s; }
+
+    .card-header {
+      background: var(--brown-dark);
+      padding: 1rem 1.5rem;
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    .card-rank {
+      font-family: 'Playfair Display', serif;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--brown-light);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      white-space: nowrap;
+      padding-top: 3px;
+    }
+
+    .card-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.35rem;
+      font-weight: 700;
+      font-style: italic;
+      color: var(--cream);
+      line-height: 1.2;
+      flex: 1;
+    }
+
+    .match-badge {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.65rem;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 4px 10px;
+      border-radius: 2px;
+      white-space: nowrap;
+    }
+
+    .badge-strong  { background: var(--green);       color: var(--cream); }
+    .badge-good    { background: var(--brown);        color: var(--cream); }
+    .badge-closest { background: var(--brown-light);  color: var(--ink); }
+
+    .card-body { padding: 1.5rem; }
+
+    .card-meta {
+      display: flex;
+      gap: 1.5rem;
+      margin-bottom: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .meta-item {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.75rem;
+      color: var(--brown);
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .meta-icon { font-size: 0.85rem; }
+
+    .card-section-label {
+      font-family: 'Playfair Display', serif;
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--brown-dark);
+      margin: 1rem 0 0.4rem;
+    }
+
+    .match-reason {
+      font-family: 'Crimson Text', serif;
+      font-style: italic;
+      font-size: 1.05rem;
+      color: var(--ink-light);
+      line-height: 1.6;
+    }
+
+    .ingredients-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-top: 0.25rem;
+    }
+
+    @media (max-width: 480px) { .ingredients-row { grid-template-columns: 1fr; } }
+
+    .ingredient-group p {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 0.35rem;
+    }
+
+    .have-label   { color: var(--green); }
+    .missing-label { color: var(--red); }
+
+    .ingredient-list {
+      list-style: none;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .ingredient-list li {
+      font-family: 'Crimson Text', serif;
+      font-size: 0.95rem;
+      padding: 2px 10px;
+      border-radius: 2px;
+    }
+
+    .ing-have    { background: rgba(61,90,62,0.12); color: var(--green); }
+    .ing-missing { background: rgba(139,46,46,0.1); color: var(--red); }
+
+    .method-text {
+      font-family: 'Crimson Text', serif;
+      font-size: 1.05rem;
+      color: var(--ink-light);
+      line-height: 1.7;
+    }
+
+    .card-divider {
+      height: 1px;
+      background: var(--parchment);
+      margin: 1rem 0;
+    }
+
+    /* ── No results ─────────────────────────────────────────────── */
+    .no-results {
+      text-align: center;
+      padding: 3rem 1rem;
+      animation: fadeUp 0.4s ease both;
+    }
+
+    .no-results p {
+      font-family: 'Crimson Text', serif;
+      font-style: italic;
+      font-size: 1.2rem;
+      color: var(--brown);
+    }
+
+    /* ── Footer ─────────────────────────────────────────────────── */
+    footer {
+      text-align: center;
+      padding: 2rem;
+      border-top: 1px solid var(--parchment);
+      margin-top: 4rem;
+    }
+
+    footer p {
+      font-family: 'Crimson Text', serif;
+      font-style: italic;
+      font-size: 0.95rem;
+      color: var(--brown-light);
+    }
+
+    /* ── Pool summary ───────────────────────────────────────────── */
+    .pool-summary {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.72rem;
+      color: var(--brown-light);
+      margin-top: 8px;
+    }
+
+    /* ── Validation note ────────────────────────────────────────── */
+    .validation-note {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.75rem;
+      color: var(--brown);
+      background: rgba(196,168,130,0.15);
+      border-left: 3px solid var(--brown-light);
+      padding: 8px 12px;
+      margin-bottom: 1rem;
+      border-radius: 0 2px 2px 0;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="top-border"></div>
+
+  <header>
+    <span class="header-ornament">&#10022; From your kitchen &#10022;</span>
+    <h1>Cooking<em>WithYou</em></h1>
+    <div class="header-rule"><span>&#10038;</span></div>
+    <p class="tagline">Recipes you know, meals you'll love.</p>
+  </header>
+
+  <main>
+
+    <!-- ── Creator Panel ───────────────────────────────────────── -->
+    <div class="form-card" style="animation-delay:0.05s">
+      <div class="creator-toggle" onclick="toggleCreator()">
+        <div class="creator-toggle-left">
+          <span class="creator-badge">Creator</span>
+          <span class="creator-toggle-title">Base Recipe Library</span>
+        </div>
+        <span class="creator-toggle-arrow open" id="creatorArrow">▲</span>
+      </div>
+      <div id="creatorBody">
+        <div class="upload-zone" id="creatorZone" onclick="document.getElementById('creatorInput').click()">
+          <input type="file" id="creatorInput" multiple accept=".txt,.md" onchange="handleCreatorFiles(this.files)" />
+          <span class="upload-icon">&#128196;</span>
+          <p>Upload your base recipe files</p>
+          <span>Always included in every search &middot; .txt or .md</span>
+        </div>
+        <div class="file-list" id="creatorFileList"></div>
+      </div>
+    </div>
+
+    <!-- ── User Form ───────────────────────────────────────────── -->
+    <div class="form-card" style="animation-delay:0.12s">
+
+      <!-- Required prompts -->
+      <div class="section-title">Tell us what you have</div>
+      <div class="two-col" style="margin-top:0.25rem">
+        <div class="field-group">
+          <label class="field-label">Ingredients <span class="required">*</span></label>
+          <textarea id="ingredientsInput" placeholder="chicken thighs, garlic, lemon, spinach, canned tomatoes, olive oil..."></textarea>
+          <span class="field-error" id="ingredientsError">Please list your ingredients.</span>
+        </div>
+        <div class="field-group">
+          <label class="field-label">What are you feeling? <span class="required">*</span></label>
+          <textarea id="cravingInput" placeholder="Something warm and hearty — a cozy weeknight dinner that isn't too heavy..."></textarea>
+          <span class="field-error" id="cravingError">Please describe what you're in the mood for.</span>
+        </div>
+      </div>
+
+      <!-- Filters -->
+      <div class="section-title" style="margin-top:1.25rem">Refine your search</div>
+      <div class="filters-grid" style="margin-top:0.25rem">
+
+        <div class="field-group">
+          <label class="field-label" style="font-size:0.85rem;margin-bottom:0.6rem">Dietary restrictions</label>
+          <div class="checkboxes-wrap">
+            <label class="checkbox-label"><input type="checkbox" value="vegetarian" /> Vegetarian</label>
+            <label class="checkbox-label"><input type="checkbox" value="vegan" /> Vegan</label>
+            <label class="checkbox-label"><input type="checkbox" value="gluten-free" /> Gluten-free</label>
+            <label class="checkbox-label"><input type="checkbox" value="dairy-free" /> Dairy-free</label>
+            <label class="checkbox-label"><input type="checkbox" value="nut-free" /> Nut-free</label>
+          </div>
+        </div>
+
+        <div class="field-group">
+          <label class="field-label" style="font-size:0.85rem;margin-bottom:0.6rem">Preferences</label>
+          <div class="selects-wrap">
+            <select id="cookTime">
+              <option value="any">Any cook time</option>
+              <option value="under 30 minutes">Under 30 minutes</option>
+              <option value="30–60 minutes">30–60 minutes</option>
+              <option value="over 60 minutes">Over 60 minutes</option>
+            </select>
+            <select id="servings">
+              <option value="">Any servings</option>
+              <option value="1–2 people">1–2 people</option>
+              <option value="3–4 people">3–4 people</option>
+              <option value="5–6 people">5–6 people</option>
+              <option value="6+ people">6+ people</option>
+            </select>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Optional user upload -->
+      <div class="section-title" style="margin-top:0.5rem">
+        Your recipes
+        <span style="font-family:'DM Sans',sans-serif;font-size:0.65rem;font-weight:400;text-transform:none;letter-spacing:0;color:var(--brown-light);margin-left:4px;">(optional)</span>
+      </div>
+      <div class="user-upload-mini" id="userZone" onclick="document.getElementById('userInput').click()">
+        <input type="file" id="userInput" multiple accept=".txt,.md" onchange="handleUserFiles(this.files)" />
+        <span style="font-size:1.1rem">📄</span>
+        <div>
+          <p>Add your own recipes to the mix</p>
+          <span>Shared with everyone &middot; .txt or .md</span>
+        </div>
+      </div>
+      <div class="file-list" id="userFileList"></div>
+      <div class="pool-summary" id="poolSummary"></div>
+
+      <!-- Warnings -->
+      <div class="alert alert-warning" id="noRecipesWarning" style="margin-top:1rem">
+        No recipe files loaded yet. Please add base recipes using the Creator panel above.
+      </div>
+
+      <!-- Submit -->
+      <div class="submit-wrap" style="margin-top:1.5rem">
+        <button class="submit-btn" id="submitBtn" onclick="handleSubmit()">
+          Find My Recipe &nbsp;&#10022;
+        </button>
+      </div>
+
+    </div>
+
+    <!-- ── Results ─────────────────────────────────────────────── -->
+    <div id="resultsArea"></div>
+
+  </main>
+
+  <footer>
+    <p>CookingWithYou &mdash; made with care, cooked with love.</p>
+  </footer>
+
+  <script>
+    // ── State ──────────────────────────────────────────────────────
+    const creatorFiles = [];
+    const userFiles    = [];
+    let creatorOpen    = true;
+
+    // ── Creator toggle ─────────────────────────────────────────────
+    function toggleCreator() {
+      creatorOpen = !creatorOpen;
+      document.getElementById('creatorBody').style.display = creatorOpen ? 'block' : 'none';
+      document.getElementById('creatorArrow').classList.toggle('open', creatorOpen);
+      document.getElementById('creatorArrow').textContent = creatorOpen ? '▲' : '▼';
+    }
+
+    // ── Drag & drop ────────────────────────────────────────────────
+    function setupDrop(id, handler) {
+      const zone = document.getElementById(id);
+      zone.addEventListener('dragover', e => { e.preventDefault(); zone.classList.add('drag-over'); });
+      zone.addEventListener('dragleave', () => zone.classList.remove('drag-over'));
+      zone.addEventListener('drop', e => { e.preventDefault(); zone.classList.remove('drag-over'); handler(e.dataTransfer.files); });
+    }
+    setupDrop('creatorZone', handleCreatorFiles);
+    setupDrop('userZone', handleUserFiles);
+
+    // ── File handlers ──────────────────────────────────────────────
+    function handleCreatorFiles(files) {
+      for (const f of files) {
+        if (!creatorFiles.find(x => x.name === f.name)) creatorFiles.push(f);
+      }
+      renderCreatorList();
+      updatePoolSummary();
+    }
+
+    function handleUserFiles(files) {
+      for (const f of files) {
+        if (!userFiles.find(x => x.name === f.name)) userFiles.push(f);
+      }
+      renderUserList();
+      updatePoolSummary();
+      // Upload to server
+      for (const f of files) uploadToServer(f);
+    }
+
+    async function uploadToServer(file) {
+      const form = new FormData();
+      form.append('file', file);
+      try {
+        await fetch('/api/recipes/upload', { method: 'POST', body: form });
+      } catch (e) {
+        console.warn('Upload failed for', file.name, e);
+      }
+    }
+
+    function renderCreatorList() {
+      const list = document.getElementById('creatorFileList');
+      list.innerHTML = '';
+      creatorFiles.forEach((f, i) => {
+        const chip = document.createElement('div');
+        chip.className = 'file-chip chip-base';
+        chip.innerHTML = `<span>${f.name}</span><button onclick="removeCreator(${i})">×</button>`;
+        list.appendChild(chip);
+      });
+    }
+
+    function renderUserList() {
+      const list = document.getElementById('userFileList');
+      list.innerHTML = '';
+      userFiles.forEach((f, i) => {
+        const chip = document.createElement('div');
+        chip.className = 'file-chip chip-user';
+        chip.innerHTML = `<span>${f.name}</span><button onclick="removeUser(${i})">×</button>`;
+        list.appendChild(chip);
+      });
+    }
+
+    function removeCreator(i) { creatorFiles.splice(i, 1); renderCreatorList(); updatePoolSummary(); }
+    function removeUser(i)    { userFiles.splice(i, 1);    renderUserList();    updatePoolSummary(); }
+
+    function updatePoolSummary() {
+      const total = creatorFiles.length + userFiles.length;
+      const el = document.getElementById('poolSummary');
+      if (total === 0) { el.textContent = ''; return; }
+      const parts = [];
+      if (creatorFiles.length) parts.push(`${creatorFiles.length} base recipe${creatorFiles.length > 1 ? 's' : ''}`);
+      if (userFiles.length)    parts.push(`${userFiles.length} added recipe${userFiles.length > 1 ? 's' : ''}`);
+      el.textContent = `Using ${parts.join(' + ')} · ${total} file${total > 1 ? 's' : ''} in pool`;
+    }
+
+    // ── Submit ─────────────────────────────────────────────────────
+    async function handleSubmit() {
+      const ingredients = document.getElementById('ingredientsInput').value.trim();
+      const craving     = document.getElementById('cravingInput').value.trim();
+      const cookTime    = document.getElementById('cookTime').value;
+      const servings    = document.getElementById('servings').value;
+
+      const dietary = [...document.querySelectorAll('.checkboxes-wrap input:checked')].map(c => c.value);
+
+      let valid = true;
+
+      document.getElementById('ingredientsInput').classList.toggle('invalid', !ingredients);
+      document.getElementById('ingredientsError').classList.toggle('show', !ingredients);
+      document.getElementById('cravingInput').classList.toggle('invalid', !craving);
+      document.getElementById('cravingError').classList.toggle('show', !craving);
+      if (!ingredients || !craving) valid = false;
+
+      // Check if DB has recipes (fetch count)
+      const recipeCheck = await fetch('/api/recipes').then(r => r.json()).catch(() => []);
+      const hasRecipes  = Array.isArray(recipeCheck) && recipeCheck.length > 0;
+
+      document.getElementById('noRecipesWarning').classList.toggle('show', !hasRecipes);
+      if (!hasRecipes) valid = false;
+
+      if (!valid) return;
+
+      const btn = document.getElementById('submitBtn');
+      btn.disabled = true;
+      btn.textContent = 'Searching your recipes…';
+
+      document.getElementById('resultsArea').innerHTML = `
+        <div class="loading-wrap">
+          <div class="loading-dots"><span></span><span></span><span></span></div>
+          <p>Leafing through your cookbook…</p>
+        </div>`;
+
+      try {
+        const res  = await fetch('/api/suggest', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ ingredients, craving, dietary, cookTime, servings })
+        });
+        const data = await res.json();
+
+        if (data.error) throw new Error(data.error);
+
+        renderResults(data);
+      } catch (err) {
+        document.getElementById('resultsArea').innerHTML =
+          `<div class="alert alert-error show">${err.message || 'Something went wrong. Please try again.'}</div>`;
+      }
+
+      btn.disabled = false;
+      btn.textContent = 'Find My Recipe ✦';
+    }
+
+    // ── Render results ─────────────────────────────────────────────
+    function renderResults(data) {
+      const { suggestions, validationNote } = data;
+
+      if (!suggestions || suggestions.length === 0) {
+        document.getElementById('resultsArea').innerHTML = `
+          <div class="no-results">
+            <p>No recipes in your library matched closely enough.<br>Try adding more recipes or adjusting your filters.</p>
+          </div>`;
+        return;
+      }
+
+      const noteHtml = validationNote
+        ? `<div class="validation-note">${validationNote}</div>`
+        : '';
+
+      const cardsHtml = suggestions.map(s => {
+        const badgeClass = s.matchScore?.toLowerCase().includes('strong') ? 'badge-strong'
+                         : s.matchScore?.toLowerCase().includes('good')   ? 'badge-good'
+                         : 'badge-closest';
+
+        const haveHtml = (s.haveIngredients || []).map(i =>
+          `<li class="ingredient-list li ing-have">${i}</li>`).join('');
+
+        const missingHtml = (s.missingIngredients || []).length > 0
+          ? `<div class="ingredient-group">
+               <p class="missing-label">You'll need</p>
+               <ul class="ingredient-list">${(s.missingIngredients).map(i =>
+                 `<li class="ing-missing">${i}</li>`).join('')}</ul>
+             </div>`
+          : '';
+
+        return `
+          <div class="recipe-card">
+            <div class="card-header">
+              <span class="card-rank">#${s.rank}</span>
+              <span class="card-title">${escHtml(s.name)}</span>
+              <span class="match-badge ${badgeClass}">${escHtml(s.matchScore || '')}</span>
+            </div>
+            <div class="card-body">
+              <div class="card-meta">
+                ${s.cookTime ? `<span class="meta-item"><span class="meta-icon">⏱</span>${escHtml(s.cookTime)}</span>` : ''}
+                ${s.servings ? `<span class="meta-item"><span class="meta-icon">👥</span>${escHtml(s.servings)}</span>` : ''}
+              </div>
+
+              <div class="card-section-label">Why this one</div>
+              <p class="match-reason">${escHtml(s.matchReason || '')}</p>
+
+              <div class="card-divider"></div>
+
+              <div class="card-section-label">Ingredients</div>
+              <div class="ingredients-row">
+                <div class="ingredient-group">
+                  <p class="have-label">You have</p>
+                  <ul class="ingredient-list">${haveHtml}</ul>
+                </div>
+                ${missingHtml}
+              </div>
+
+              <div class="card-divider"></div>
+
+              <div class="card-section-label">How to make it</div>
+              <p class="method-text">${escHtml(s.methodSummary || '')}</p>
+            </div>
+          </div>`;
+      }).join('');
+
+      document.getElementById('resultsArea').innerHTML = `
+        <h2 class="results-header">Here's what we found <em>for you</em></h2>
+        ${noteHtml}
+        <div class="recipe-cards">${cardsHtml}</div>`;
+    }
+
+    function escHtml(str) {
+      return String(str)
+        .replace(/&/g,'&amp;')
+        .replace(/</g,'&lt;')
+        .replace(/>/g,'&gt;')
+        .replace(/"/g,'&quot;');
+    }
+  </script>
+
+</body>
+</html>
